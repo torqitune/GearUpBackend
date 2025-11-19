@@ -4,11 +4,11 @@ FROM eclipse-temurin:21-jdk
 # set working directory
 WORKDIR /app
 
-# copy the jar file to the working directory , source is demo-0.0.1-SNAPSHOT.jar and destination is app.jar
-COPY target/demo-0.0.1-SNAPSHOT.jar app.jar
+# copy entire project
+COPY . .
 
-# this tells docker that the application inside container listens on port 8080
-EXPOSE 8080
+# Build the JAR inside the container
+RUN ./mvnw clean package -DskipTests
 
-# commands to run the app
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Run the JAR
+CMD ["java", "-jar", "target/demo-0.0.1-SNAPSHOT.jar"]
