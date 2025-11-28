@@ -35,14 +35,20 @@ public class SecurityConfig {
                                               // web server generate unique tokens for each user session whne user
                                               // submits request the server validate the token with one it originally
                                               // generated.
-                .cors(cors -> cors.configurationSource(request -> {  // this enables CORS , allowing frontend on another domain to call backend
+                .cors(cors -> cors.configurationSource(request -> { // this enables CORS , allowing frontend on another
+                                                                    // domain to call backend
                     var corsConfig = new org.springframework.web.cors.CorsConfiguration();
-                    corsConfig.setAllowedOrigins(java.util.List.of("https://gearup-69678.bubbleapps.io")); // Only allow this domain to access the backend
-                    corsConfig.setAllowedMethods(java.util.List.of("GET", "POST"));     // tells which methods are allowed
-                    corsConfig.setAllowedHeaders(java.util.List.of("*"));       // this allows frontend to include any header (including auth + jwt)
-                    corsConfig.setAllowCredentials(false);          // no cookies allowed
+                    corsConfig.setAllowedOrigins(java.util.List.of("*")); // Allow all origins for development/testing
+                    corsConfig.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")); // tells
+                                                                                                                         // which
+                                                                                                                         // methods
+                                                                                                                         // are
+                                                                                                                         // allowed
+                    corsConfig.setAllowedHeaders(java.util.List.of("*")); // this allows frontend to include any header
+                                                                          // (including auth + jwt)
+                    corsConfig.setAllowCredentials(false); // no cookies allowed
                     return corsConfig;
-                })) 
+                }))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll() // make this endpoint public
                         .requestMatchers(HttpMethod.GET, "/api/blogs/**").permitAll() // make this endpoint public
