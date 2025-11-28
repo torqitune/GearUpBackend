@@ -4,27 +4,30 @@ import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity     // marking this class as a entity i.e entity mapped to a database table
-@Data       // data annotation to generate getters and setters
-@Table(name = "users")      // specify table name in the database
+@Entity // marking this class as a entity i.e entity mapped to a database table
+@Data // data annotation to generate getters and setters
+@Table(name = "users") // specify table name in the database
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable=false, length=100)
+    @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable=false, unique=true, length=150)
+    @Column(nullable = false, unique = true, length = 150)
     private String email;
 
-    @Column(name="password_hash", nullable=false, length=255)
+    @JsonIgnore // this will prevent password from being exposed in the response
+    @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
 
-    @Column(name="role", nullable=false, length=20)
-    private String role = "USER";   // default
+    @Column(name = "role", nullable = false, length = 20)
+    private String role = "USER"; // default
 
-    @Column(name="created_at")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 }
