@@ -77,4 +77,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter { // onceperre
         return null;
     }
 
+    // Skip JWT authentication for public endpoints
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        // Skip filter for auth endpoints (login, register)
+        return path.startsWith("/api/auth/");
+    }
+
 }
