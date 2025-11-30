@@ -2,13 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Image;
 import com.example.demo.service.ImageService;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.http.ResponseEntity;
+import com.example.demo.dto.ImageUploadRequest;
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.security.UserPrincipal;
 import java.util.List;
-import java.util.Map;
 
 @RestController // marking this class as a REST controller
 @RequestMapping("/api/images") // base URL for all endpoints in this controller
@@ -32,25 +28,9 @@ public class ImageController {
         return imageService.listByUser(userId);
     }
 
-    // creating a postmapping for uploading images
+    // creating a post mapping to upload/create a new image
     @PostMapping
-    public ResponseEntity<?> uploadImage(@RequestBody Map<String, Object> request, Authentication authentication) {
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal(); // getting the user details from
-                                                                                     // the authentication object
-        String fileUrl = (String) request.get("fileUrl"); // getting the file URL from the request
-        Long eventId = request.get("eventId") != null ? Long.parseLong(request.get("eventId").toString()) : null; // getting
-                                                                                                                  // the
-                                                                                                                  // event
-                                                                                                                  // ID
-                                                                                                                  // from
-                                                                                                                  // the
-                                                                                                                  // request
-
-        Image savedImage = imageService.createImage(fileUrl, userPrincipal.getId(), eventId); // calling the createImage
-                                                                                              // method of ImageService
-                                                                                              // to create a new image
-
-        return ResponseEntity.ok(savedImage); // return with the saved image
-
+    public Image create(@RequestBody ImageUploadRequest request) {
+        return imageService.createImage(request.getFileUrl(), request.getUserId(), request.getEventId());
     }
 }
