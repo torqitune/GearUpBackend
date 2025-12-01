@@ -2,9 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Image;
 import com.example.demo.service.ImageService;
-import com.example.demo.dto.ImageUploadRequest;
-import com.example.demo.security.UserPrincipal;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -32,15 +29,7 @@ public class ImageController {
 
     // creating a post mapping to upload/create a new image
     @PostMapping
-    public Image create(@RequestBody ImageUploadRequest request) {
-        // Get the authenticated user's ID from SecurityContext (not method parameter to
-        // avoid 403)
-        Authentication authentication = org.springframework.security.core.context.SecurityContextHolder
-                .getContext().getAuthentication();
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        Long authenticatedUserId = userPrincipal.getId();
-
-        // Use the authenticated user's ID from JWT token
-        return imageService.createImage(request.getFileUrl(), authenticatedUserId, request.getEventId());
+    public Image create(@RequestBody Image image) {
+        return imageService.create(image);
     }
 }
