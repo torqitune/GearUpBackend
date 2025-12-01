@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Image;
 import com.example.demo.service.ImageService;
+import com.example.demo.dto.ImageUploadRequest;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class ImageController {
 
     // creating a post mapping to upload/create a new image
     @PostMapping
-    public Image create(@RequestBody Image image) {
-        return imageService.create(image);
+    public Image create(@RequestBody ImageUploadRequest request) {
+        return imageService.createImage(request.getFileUrl(), request.getUserId(), request.getEventId());
     }
 }
