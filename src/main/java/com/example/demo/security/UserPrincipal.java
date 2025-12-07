@@ -15,12 +15,15 @@ import java.util.Collections;
  */
 public class UserPrincipal implements UserDetails {
 
+    // these are the fields that we want Spring to know about the user.
     private final Long id;
     private final String email;
     private final String passwordHash;
     private final String role;
     private final String name;
 
+
+    // constructor for UserPrincipal
     public UserPrincipal(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
@@ -45,18 +48,18 @@ public class UserPrincipal implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<? extends GrantedAuthority> getAuthorities() { // this method returns the roles of the user
         // Convert the role string to a GrantedAuthority
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));   // return the role as a GrantedAuthority
     }
 
     @Override
-    public String getPassword() {
+    public String getPassword() { // this method returns the password of the user
         return passwordHash;
     }
 
     @Override
-    public String getUsername() {
+    public String getUsername() { // this method returns the username of the user
         // Using email as the username
         return email;
     }

@@ -66,7 +66,7 @@ public class ImageService { // defining ImageService class
             image.setEvent(event);
         }
 
-        return repo.save(image);
+        return repo.save(image); // save the image to the database and return it
     }
 
     // this method deletes an image by its ID using the deleteById() method of

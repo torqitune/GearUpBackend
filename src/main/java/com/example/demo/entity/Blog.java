@@ -44,6 +44,10 @@ public class Blog {
         @Column(name = "created_at")
         private LocalDateTime createdAt;
 
+        // title column
+        @Column(name = "title", nullable = false, length = 255)
+        private String title;
+
         // --- Getters and Setters ---
         public Long getId() {
                 return id;
