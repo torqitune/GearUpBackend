@@ -96,4 +96,12 @@ public class Blog {
         public void setCreatedAt(LocalDateTime createdAt) {
                 this.createdAt = createdAt;
         }
+
+        public String getTitle() {
+                return title;
+        }
+
+        public void setTitle(String title) {
+                this.title = title;
+        }
 }
