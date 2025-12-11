@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import lombok.Data;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -41,7 +42,9 @@ public class Blog {
         private String status = "PENDING"; // default value is PENDING
 
         // timestamp for when the blog was created
-        @Column(name = "created_at")
+        @CreationTimestamp
+        @Column(name = "created_at", updatable = false) // updatable = false ensures that the column is not updated
+                                                        // after created (immutable)
         private LocalDateTime createdAt;
 
         @Column(name = "title", nullable = false, length = 255)
